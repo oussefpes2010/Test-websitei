@@ -14,13 +14,16 @@
       background:#111;
     }
 
+    /* Background video */
     video.bg {
       position:fixed;right:0;bottom:0;
       min-width:100%;min-height:100%;
       z-index:-2;object-fit:cover;
     }
-    .overlay {position:fixed;top:0;left:0;width:100%;height:100%;
-      background:rgba(0,0,0,0.5);z-index:-1;}
+    .overlay {
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.5);z-index:-1;
+    }
 
     .container {
       position:relative;height:100%;
@@ -37,7 +40,18 @@
       box-shadow:0 0 25px rgba(255,255,255,0.6);
     }
 
-    h1 {font-size:2.5em;text-shadow:0 0 10px #000;}
+    h1 {
+      font-size:2.5em;
+      font-weight:bold;
+      color:#fff;
+      text-shadow:0 0 8px #fff, 0 0 20px #0ff, 0 0 40px #0ff;
+      animation: neon 2s infinite alternate;
+    }
+    @keyframes neon {
+      from {text-shadow:0 0 8px #fff,0 0 20px #0ff,0 0 40px #0ff;}
+      to {text-shadow:0 0 12px #fff,0 0 25px #0ff,0 0 60px #0ff;}
+    }
+
     p.tagline {font-size:1.1em;opacity:0.9;margin-top:-10px;}
 
     /* Discord Status Box */
@@ -48,14 +62,10 @@
       box-shadow:0 0 12px rgba(0,0,0,0.6);
       display:flex;
       flex-direction:column;
-      align-items:center;
+      align-items:flex-start;
       gap:8px;
       transition: background 0.3s;
-    }
-    .discord-status h2 {
-      margin:0;
-      font-size:1.2em;
-      font-weight:bold;
+      max-width:320px;
     }
     .discord-status .line {
       display:flex;
@@ -97,7 +107,8 @@
   </style>
 </head>
 <body>
-  <video autoplay muted loop class="bg">
+  <!-- Background video (حط ملف background.mp4 في نفس المكان) -->
+  <video autoplay loop muted playsinline class="bg" id="bgVideo">
     <source src="background.mp4" type="video/mp4">
   </video>
   <div class="overlay"></div>
@@ -106,15 +117,17 @@
     <!-- Avatar -->
     <div class="avatar"></div>
     <h1>Youssef Ayman</h1>
-    <p class="tagline">I don't care about anyone </p>
+    <p class="tagline">I don't care about anyone</p>
 
     <!-- Discord Status -->
     <div id="statusBox" class="discord-status">
-      <h2>Youssef</h2>
       <div class="line">
         <img src="discord.png" alt="discord">
         <span>Discord Status:</span>
         <span id="status" class="status-text">Loading...</span>
+      </div>
+      <div class="line">
+        <span>Name:</span> <span>Youssef</span>
       </div>
       <div class="line">
         <span>ID:</span> <span>1347348982279700512</span>
@@ -136,7 +149,8 @@
         <div class="title">يومين و ليلة</div>
         <div class="artist">Jadal</div>
         <div class="wave"><span></span><span></span><span></span><span></span></div>
-        <audio id="music" autoplay loop hidden>
+        <!-- تشغيل الأغنية تلقائي -->
+        <audio id="music" autoplay loop>
           <source src="song.mp3" type="audio/mp3">
         </audio>
       </div>
@@ -180,7 +194,13 @@
     }
 
     fetchStatus();
-    setInterval(fetchStatus, 5000); // يحدث كل 5 ثواني
+    setInterval(fetchStatus, 5000);
+
+    // Trick لتشغيل الصوت رغم قيود المتصفح
+    const music = document.getElementById("music");
+    document.body.addEventListener("click", () => {
+      music.play().catch(()=>{});
+    }, { once:true });
   </script>
 </body>
 </html>
