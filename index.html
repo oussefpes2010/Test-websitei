@@ -6,20 +6,30 @@
   <title>Youssef Ayman</title>
   <style>
     * {margin:0;padding:0;box-sizing:border-box;}
-    body,html {
+    body,html {width:100%;height:100%;overflow:hidden;font-family: Arial, sans-serif;}
+
+    /* شاشة البداية */
+    #startScreen {
+      position:fixed;
+      top:0;left:0;
       width:100%;height:100%;
-      font-family: Arial, sans-serif;
-      overflow:hidden;
+      background:black;
       color:white;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:2em;
+      cursor:pointer;
+      z-index:9999;
+      transition: opacity 1s ease;
     }
 
     video.bg {
       position:fixed;
       right:0;bottom:0;
-      min-width:100%;
-      min-height:100%;
-      z-index:-2;
+      min-width:100%;min-height:100%;
       object-fit:cover;
+      z-index:-2;
     }
     .overlay {
       position:fixed;
@@ -37,6 +47,9 @@
       justify-content:center;
       text-align:center;
       gap:25px;
+      color:white;
+      opacity:0;
+      transition: opacity 1.5s ease;
     }
 
     .avatar {
@@ -47,12 +60,8 @@
       box-shadow:0 0 25px rgba(255,255,255,0.6);
     }
 
-    h1 {
-      font-size:2.5em;
-      text-shadow:0 0 10px #000;
-    }
+    h1 {font-size:2.5em;text-shadow:0 0 10px #000;}
 
-    /* Discord Card */
     .discord {
       background:rgba(0,0,0,0.6);
       border-radius:15px;
@@ -61,31 +70,27 @@
       align-items:center;
       gap:15px;
       box-shadow:0 0 10px rgba(0,0,0,0.8);
+      position:relative;
     }
     .discord img {
       width:50px;height:50px;border-radius:50%;
     }
-    .discord .info {
-      text-align:left;
-    }
+    .discord .info {text-align:left;}
     .discord .username {font-weight:bold;}
     .discord .status {font-size:0.8em;opacity:0.7;}
 
-    /* Social Apps */
     .apps {
       display:flex;
       gap:25px;
       margin-top:10px;
     }
     .apps a img {
-      width:40px;
-      height:40px;
+      width:40px;height:40px;
       filter:brightness(0) invert(1);
       transition:transform 0.2s;
     }
     .apps a img:hover {transform:scale(1.2);}
 
-    /* Music Player Style */
     .music-card {
       background:rgba(0,0,0,0.6);
       padding:15px;
@@ -95,61 +100,49 @@
       display:flex;
       align-items:center;
       gap:15px;
+      flex-direction:column;
     }
     .music-card img {
       width:70px;
       height:70px;
       border-radius:50%;
-      flex-shrink:0;
       box-shadow:0 0 10px rgba(255,255,255,0.5);
     }
-    .music-info {
-      flex:1;
-      text-align:left;
-    }
-    .music-info .title {
-      font-weight:bold;
-    }
-    .music-info .artist {
-      font-size:0.9em;
-      opacity:0.8;
-    }
-    .wave {
-      display:flex;
-      gap:3px;
-      margin-top:8px;
-    }
+    .music-info {flex:1;text-align:center;}
+    .music-info .title {font-weight:bold;}
+    .music-info .artist {font-size:0.9em;opacity:0.8;}
+
+    .wave {display:flex;gap:3px;justify-content:center;margin:8px 0;}
     .wave span {
-      display:block;
-      width:4px;
-      height:12px;
-      background:#1db954;
+      display:block;width:4px;height:12px;background:#1db954;
       border-radius:2px;
       animation: bounce 1s infinite ease-in-out;
     }
     .wave span:nth-child(2){animation-delay:0.2s;}
     .wave span:nth-child(3){animation-delay:0.4s;}
     .wave span:nth-child(4){animation-delay:0.6s;}
-    @keyframes bounce {
-      0%,100%{transform:scaleY(0.3);}
-      50%{transform:scaleY(1);}
-    }
+    @keyframes bounce {0%,100%{transform:scaleY(0.3);}50%{transform:scaleY(1);}}
 
-    audio {display:none;} /* نخفي الكنترول */
+    .progress {width:100%;height:5px;background:#333;border-radius:3px;overflow:hidden;}
+    .progress div {width:0%;height:100%;background:#1db954;}
+
+    audio {display:none;}
   </style>
 </head>
 <body>
-  <video autoplay muted loop class="bg">
+  <!-- شاشة البداية -->
+  <div id="startScreen">Click to open website</div>
+
+  <!-- الخلفية -->
+  <video autoplay muted loop class="bg" playsinline>
     <source src="background.mp4" type="video/mp4">
   </video>
   <div class="overlay"></div>
 
   <div class="container">
-    <!-- الصورة -->
     <div class="avatar"></div>
     <h1>Youssef Ayman</h1>
 
-    <!-- Discord -->
     <div class="discord">
       <img src="avatar.png" alt="discord-avatar">
       <div class="info">
@@ -159,7 +152,6 @@
       </div>
     </div>
 
-    <!-- Social Links -->
     <div class="apps">
       <a href="https://wa.me/201124547983" target="_blank"><img src="whatsapp.png" alt="WhatsApp"></a>
       <a href="https://discord.com/users/1347348982279700512" target="_blank"><img src="discord.png" alt="Discord"></a>
@@ -167,19 +159,40 @@
       <a href="https://open.spotify.com/user/31twllkzngi5dtplmwzhe4ijngha?si=y9JnB3lcR5ysz2jI-3f90w" target="_blank"><img src="spotify.png" alt="Spotify"></a>
     </div>
 
-    <!-- Music -->
     <div class="music-card">
       <img src="cover.jpg" alt="cover">
       <div class="music-info">
         <div class="title">يومين و ليلة</div>
         <div class="artist">Jadal</div>
-        <!-- موجة الصوت -->
         <div class="wave"><span></span><span></span><span></span><span></span></div>
-        <audio id="music" autoplay loop>
+        <div class="progress"><div id="bar"></div></div>
+        <audio id="music" loop>
           <source src="song.mp3" type="audio/mp3">
         </audio>
       </div>
     </div>
   </div>
+
+  <script>
+    const audio = document.getElementById("music");
+    const bar = document.getElementById("bar");
+    const startScreen = document.getElementById("startScreen");
+    const container = document.querySelector(".container");
+
+    audio.addEventListener("timeupdate", () => {
+      if (!isNaN(audio.duration)) {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        bar.style.width = progress + "%";
+      }
+    });
+
+    startScreen.addEventListener("click", () => {
+      startScreen.style.opacity = "0"; 
+      setTimeout(()=> startScreen.style.display="none",1000);
+      container.style.display = "flex";  
+      setTimeout(()=> container.style.opacity="1",100); 
+      audio.play().catch(()=>{});
+    });
+  </script>
 </body>
 </html>
