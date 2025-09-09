@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Youssef Ayman</title>
+  <style>
+    * {margin:0;padding:0;box-sizing:border-box;}
+    body,html {
+      width:100%;height:100%;
+      font-family: Arial, sans-serif;
+      overflow:hidden;
+      color:white;
+    }
+
+    video.bg {
+      position:fixed;
+      right:0;bottom:0;
+      min-width:100%;
+      min-height:100%;
+      z-index:-2;
+      object-fit:cover;
+    }
+    .overlay {
+      position:fixed;
+      top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.5);
+      z-index:-1;
+    }
+
+    .container {
+      position:relative;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      gap:25px;
+    }
+
+    .avatar {
+      width:130px;height:130px;
+      border-radius:50%;
+      border:3px solid #fff;
+      background:url("avatar.png") center/cover no-repeat;
+      box-shadow:0 0 25px rgba(255,255,255,0.6);
+    }
+
+    h1 {
+      font-size:2.5em;
+      text-shadow:0 0 10px #000;
+    }
+
+    /* Discord Card */
+    .discord {
+      background:rgba(0,0,0,0.6);
+      border-radius:15px;
+      padding:10px 20px;
+      display:flex;
+      align-items:center;
+      gap:15px;
+      box-shadow:0 0 10px rgba(0,0,0,0.8);
+    }
+    .discord img {
+      width:50px;height:50px;border-radius:50%;
+    }
+    .discord .info {
+      text-align:left;
+    }
+    .discord .username {font-weight:bold;}
+    .discord .status {font-size:0.8em;opacity:0.7;}
+
+    /* Social Apps */
+    .apps {
+      display:flex;
+      gap:25px;
+      margin-top:10px;
+    }
+    .apps a img {
+      width:40px;
+      height:40px;
+      filter:brightness(0) invert(1);
+      transition:transform 0.2s;
+    }
+    .apps a img:hover {transform:scale(1.2);}
+
+    /* Music Player Style */
+    .music-card {
+      background:rgba(0,0,0,0.6);
+      padding:15px;
+      border-radius:15px;
+      width:280px;
+      box-shadow:0 0 10px rgba(0,0,0,0.8);
+    }
+    .music-card img {
+      width:100%;
+      border-radius:10px;
+    }
+    .music-card .title {
+      margin-top:10px;
+      font-weight:bold;
+    }
+    .music-card .artist {
+      font-size:0.9em;
+      opacity:0.8;
+    }
+    .progress {
+      margin-top:10px;
+      width:100%;
+      height:5px;
+      background:#444;
+      border-radius:3px;
+      overflow:hidden;
+    }
+    .progress div {
+      width:0%;
+      height:100%;
+      background:#1db954;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop class="bg">
+    <source src="background.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+
+  <div class="container">
+    <!-- الصورة -->
+    <div class="avatar"></div>
+    <h1>Youssef Ayman</h1>
+
+    <!-- Discord -->
+    <div class="discord">
+      <img src="avatar.png" alt="discord-avatar">
+      <div class="info">
+        <div class="username">youssef</div>
+        <div class="status">Offline</div>
+        <div class="id">ID: 1347348982279700512</div>
+      </div>
+    </div>
+
+    <!-- Social Links -->
+    <div class="apps">
+      <a href="https://wa.me/201124547983" target="_blank"><img src="icons/whatsapp.png" alt="WhatsApp"></a>
+      <a href="https://discord.com/users/1347348982279700512" target="_blank"><img src="icons/discord.png" alt="Discord"></a>
+      <a href="https://www.tiktok.com/@1.yousef.king" target="_blank"><img src="icons/tiktok.png" alt="TikTok"></a>
+      <a href="https://open.spotify.com/user/31twllkzngi5dtplmwzhe4ijngha?si=y9JnB3lcR5ysz2jI-3f90w" target="_blank"><img src="icons/spotify.png" alt="Spotify"></a>
+    </div>
+
+    <!-- Music -->
+    <div class="music-card">
+      <img src="cover.jpg" alt="cover">
+      <div class="title">يومين و ليلة</div>
+      <div class="artist">Jadal</div>
+      <div class="progress"><div id="bar"></div></div>
+      <audio id="music" autoplay>
+        <source src="song.mp3" type="audio/mp3">
+      </audio>
+    </div>
+  </div>
+
+  <script>
+    const audio = document.getElementById("music");
+    const bar = document.getElementById("bar");
+    audio.addEventListener("timeupdate", () => {
+      const progress = (audio.currentTime / audio.duration) * 100;
+      bar.style.width = progress + "%";
+    });
+  </script>
+</body>
+</html>
